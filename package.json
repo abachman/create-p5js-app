@@ -1,0 +1,25 @@
+{
+  "name": "create-p5js-app",
+  "version": "0.0.1",
+  "description": "Start a new p5.js app!",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abachman/create-p5js-app.git"
+  },
+  "keywords": [
+    "p5.js",
+    "processing",
+    "processing.org",
+    "p5"
+  ],
+  "author": "Adam Bachman <adam.bachman@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abachman/create-p5js-app/issues"
+  },
+  "homepage": "https://github.com/abachman/create-p5js-app#readme"
+}
