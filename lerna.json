@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "packages/cp5-template",
+    "packages/p5js-scripts",
+    "packages/create-p5js-app"
+  ],
+  "version": "0.0.1"
+}

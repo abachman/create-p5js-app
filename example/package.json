@@ -1,0 +1,18 @@
+{
+  "name": "my-sketch",
+  "version": "0.0.1",
+  "description": "rectangles rectangles",
+  "scripts": {
+    "start": "p5js-scripts server",
+    "build": "p5js-scripts build"
+  },
+  "author": "Adam Bachman <adam.bachman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "p5": "^1.4.0",
+    "p5js-scripts": "file:./../packages/p5js-scripts"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}
