@@ -34,7 +34,7 @@ function draw() {
   }
   x += dx;
   y += dy;
-  h = (h + dh) % 256;
+  h = (h + dh) % 360;
 }
 
 // export so that script runs in bundled env
