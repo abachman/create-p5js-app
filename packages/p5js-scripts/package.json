@@ -3,7 +3,8 @@
     "p5js-scripts": "./bin/p5js-scripts.js"
   },
   "scripts": {
-    "lint": "eslint . --ext .js"
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "async-lock": "^1.3.0",

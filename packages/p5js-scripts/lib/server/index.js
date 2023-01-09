@@ -1,11 +1,12 @@
-const express = require("express");
 const path = require("path");
+const http = require("http");
+const EventEmitter = require("events");
+const express = require("express");
 const logger = require("morgan");
 const { WebSocketServer } = require("ws");
-const http = require("http");
 const AsyncLock = require("async-lock");
-const EventEmitter = require("events");
 const open = require("open");
+const Buffer = require("buffer")
 
 const Builder = require("../builder");
 const Watcher = require("../watcher");
@@ -24,17 +25,27 @@ const app = express();
 app.use(express.static("public"));
 app.use(logger("combined"));
 
-app.get("/", (req, res) => {
+const FAVICON = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
+app.get("/favicon.ico", (_req, res) => {
+  const img = Buffer.from(FAVICON, 'base64');
+ res.writeHead(200, {
+        'Content-Type': 'image/x-icon',
+        'Content-Length': img.length
+      });
+ res.end(img);
+})
+
+app.get("/", (request, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
 });
 
-app.use(function (req, res, next) {
-  const err = new Error("Not Found");
-  err.status = 404;
-  next(err);
+app.use((request, res, next) => {
+  const error = new Error("Not Found");
+  error.status = 404;
+  next(error);
 });
 
-// we need a websocket endpoint to notify listeners of updates
+// We need a websocket endpoint to notify listeners of updates
 const server = http.createServer(app);
 
 const wss = new WebSocketServer({ server });
@@ -63,20 +74,20 @@ async function run(port) {
     bus.emit("public-change", changes);
   });
 
-  // prevent multiple simultaneous builds
+  // Prevent multiple simultaneous builds
   const lock = new AsyncLock();
   watcher.on("src", () => {
-    lock.acquire("build", function (done) {
+    lock.acquire("build", (done) => {
       console.log("building...");
       Builder.run({ port })
         .then(() => done())
-        .catch((ex) => {
-          console.error("build error", ex);
+        .catch((error) => {
+          console.error("build error", error);
         });
     });
   });
 
-  server.listen(port, function () {
+  server.listen(port, () => {
     console.log(`server is running at http://localhost:${port}`);
     console.log(`  in ${rootPath}, opening browser...`);
     bus.emit("ready");
